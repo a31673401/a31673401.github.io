@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>張存瑀 — 電機工程</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFENEVEOCIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2LDE2KSByb3RhdGUoLTM1KSI+CiAgICA8cmVjdCB4PSItMiIgeT0iLTciIHdpZHRoPSI0IiBoZWlnaHQ9IjE0IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICAgIDxyZWN0IHg9Ii05IiB5PSItMiIgd2lkdGg9IjciIGhlaWdodD0iNCIgcng9IjEiIGZpbGw9IiM5M0M1RkQiLz4KICAgIDxyZWN0IHg9IjIiIHk9Ii0yIiB3aWR0aD0iNyIgaGVpZ2h0PSI0IiByeD0iMSIgZmlsbD0iIzkzQzVGRCIvPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjMiIGZpbGw9IndoaXRlIi8+CiAgICA8bGluZSB4MT0iNSIgeTE9Ii01IiB4Mj0iOSIgeTI9Ii05IiBzdHJva2U9IiM5M0M1RkQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxjaXJjbGUgY3g9IjEwIiBjeT0iLTEwIiByPSIxLjUiIGZpbGw9IiNGQkJGMjQiLz4KICA8L2c+Cjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F5F0;
+  --bg2: #EDEAE3;
+  --text: #1A1916;
+  --muted: #6B6860;
+  --accent: #1D4ED8;
+  --accent-light: #EEF2FF;
+  --border: rgba(26,25,22,0.12);
+  --border-strong: rgba(26,25,22,0.22);
+  --card-bg: #FFFFFF;
+  --serif: 'Noto Serif TC', serif;
+  --sans: 'Noto Sans TC', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── FLUID GLASS CANVAS ── */
+#fluid-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2.5rem; height: 56px;
+  background: rgba(247,245,240,0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 0.5px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 16px; font-weight: 700;
+  letter-spacing: 0.02em; color: var(--text); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  letter-spacing: 0.04em; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* language toggle */
+.lang-btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  color: var(--muted); background: none; border: 0.5px solid var(--border-strong);
+  padding: 4px 10px; cursor: pointer; transition: all 0.2s;
+}
+.lang-btn:hover { color: var(--text); border-color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; position: relative; z-index: 1;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 2.5rem 4rem; overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px; opacity: 0.5;
+}
+.hero-content { position: relative; z-index: 1; max-width: 720px; }
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 8vw, 6rem); font-weight: 700;
+  line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+}
+.hero h1 span { color: var(--accent); }
+.hero-desc {
+  font-size: 16px; color: var(--muted); max-width: 460px;
+  line-height: 1.8; margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.55s forwards;
+}
+/* EN version hidden by default */
+[data-en] { display: none; }
+body.en [data-zh] { display: none; }
+body.en [data-en] { display: block; }
+body.en span[data-en] { display: inline; }
+body.en span[data-zh] { display: none; }
+
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.8s 0.72s forwards;
+}
+.btn-dark {
+  background: var(--text); color: var(--bg);
+  border: none; padding: 12px 24px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em; cursor: pointer;
+  text-decoration: none; display: inline-block; transition: opacity 0.2s;
+}
+.btn-dark:hover { opacity: 0.8; }
+.btn-outline {
+  background: transparent; color: var(--text);
+  border: 0.5px solid var(--border-strong); padding: 12px 24px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em; cursor: pointer;
+  text-decoration: none; display: inline-block; transition: background 0.2s;
+}
+.btn-outline:hover { background: var(--bg2); }
+
+.hero-scroll {
+  position: absolute; bottom: 2rem; right: 2.5rem;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--muted); letter-spacing: 0.1em;
+  writing-mode: vertical-rl;
+  display: flex; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeIn 1s 1.2s forwards;
+}
+.hero-scroll::after {
+  content: ''; display: block; width: 0.5px; height: 40px;
+  background: var(--muted);
+}
+
+/* ── SECTIONS ── */
+section { padding: 5rem 2.5rem; border-top: 0.5px solid var(--border); position: relative; z-index: 1; }
+.section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
+.section-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+.section-title { font-family: var(--serif); font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+
+/* ── SKILLS ── */
+.skills-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+.skills-intro { font-size: 14px; color: var(--muted); line-height: 1.8; }
+.skills-groups { display: flex; flex-direction: column; gap: 2rem; }
+.skill-group-label {
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+  font-family: var(--mono); font-size: 12px; color: var(--text);
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid var(--border-strong); padding: 6px 14px;
+  letter-spacing: 0.04em; transition: all 0.2s;
+}
+.skill-tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+.skill-tag.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── TIMELINE ── */
+.timeline { display: flex; flex-direction: column; }
+.timeline-row {
+  display: grid; grid-template-columns: 140px 1fr;
+  border-top: 0.5px solid var(--border);
+  padding: 2rem 0; gap: 2rem;
+}
+.timeline-row:last-child { border-bottom: 0.5px solid var(--border); }
+.tl-year { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.06em; padding-top: 3px; }
+.tl-badge {
+  display: inline-block; font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; margin-bottom: 10px;
+}
+.tl-badge.award { background: #FEF9C3; color: #854D0E; border: 0.5px solid #FDE047; }
+.tl-badge.finalist { background: var(--accent-light); color: var(--accent); border: 0.5px solid #BFDBFE; }
+.tl-badge.hackathon { background: #F0FDF4; color: #166534; border: 0.5px solid #BBF7D0; }
+.tl-title { font-family: var(--serif); font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+.tl-org { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.tl-link {
+  display: inline-block; margin-top: 10px;
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.06em; text-decoration: none;
+  border-bottom: 0.5px solid var(--accent); padding-bottom: 1px; transition: opacity 0.2s;
+}
+.tl-link:hover { opacity: 0.7; }
+
+/* ── AWARD IMAGE ── */
+.tl-cert {
+  margin-top: 14px; display: inline-block; cursor: pointer; position: relative;
+}
+.tl-cert img {
+  width: 90px; height: auto;
+  border: 0.5px solid var(--border-strong);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+  transition: transform 0.2s, filter 0.2s;
+  display: block;
+}
+.tl-cert:hover img { transform: scale(1.04); filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15)); }
+.tl-cert-label {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  letter-spacing: 0.08em; margin-top: 5px;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  align-items: center; justify-content: center; cursor: zoom-out;
+}
+.lightbox.open { display: flex; animation: fadeIn 0.25s ease; }
+.lightbox img {
+  max-width: 90vw; max-height: 90vh; object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  border-radius: 2px;
+  animation: zoomIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+.lightbox-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.6); cursor: pointer; background: none; border: none;
+  transition: color 0.2s;
+}
+.lightbox-close:hover { color: white; }
+
+/* ── CONTACT ── */
+.contact-section { background: var(--text); color: var(--bg); }
+.contact-section .section-title { color: var(--bg); }
+.contact-section .section-num { color: rgba(247,245,240,0.45); }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.contact-card {
+  border: 0.5px solid rgba(247,245,240,0.2); padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 6px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+.contact-card:hover { background: rgba(255,255,255,0.08); }
+.contact-card-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(247,245,240,0.45);
+}
+.contact-card-value {
+  font-size: 14px; color: var(--bg); text-decoration: none;
+  word-break: break-all; transition: opacity 0.2s;
+}
+a.contact-card-value:hover { opacity: 0.7; }
+.contact-note {
+  margin-top: 3rem; font-size: 13px; color: rgba(247,245,240,0.4);
+  font-family: var(--mono); letter-spacing: 0.04em;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--text); border-top: 0.5px solid rgba(247,245,240,0.1);
+  padding: 1.5rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1;
+}
+footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240,0.3); letter-spacing: 0.08em; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── GLASS CARD overlay on hero ── */
+.glass-pill {
+  display: inline-block;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 0.5px solid rgba(255,255,255,0.45);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 0.6s 0.05s forwards;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 1.25rem; }
+  .nav-links { gap: 1rem; }
+  .hero { padding: 0 1.25rem 3rem; }
+  section { padding: 3.5rem 1.25rem; }
+  .skills-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .timeline-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  footer { flex-direction: column; gap: 6px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLUID GLASS CANVAS -->
+<canvas id="fluid-canvas"></canvas>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">ESC / 關閉</button>
+  <img id="lightbox-img" src="" alt="獎狀">
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">張存瑀</a>
+  <ul class="nav-links">
+    <li><a href="#skills"><span data-zh>技術</span><span data-en>Skills</span></a></li>
+    <li><a href="#awards"><span data-zh>經歷</span><span data-en>Awards</span></a></li>
+    <li><a href="#contact"><span data-zh>聯絡</span><span data-en>Contact</span></a></li>
+    <li><button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="glass-pill">Electrical Engineering · STUST</div>
+    <p class="hero-eyebrow" data-zh>南臺科技大學 · 電機工程系</p>
+    <p class="hero-eyebrow" data-en style="opacity:0;animation:fadeUp 0.6s 0.2s forwards;">Southern Taiwan University of Science and Technology</p>
+    <h1>張<span>存</span>瑀</h1>
+    <p class="hero-desc" data-zh>
+      電機工程學生，專注於嵌入式系統開發與程式設計。<br>
+      熱衷透過競賽與實作累積工程經驗，持續探索軟硬體整合的可能性。
+    </p>
+    <p class="hero-desc" data-en>
+      Electrical Engineering student focused on embedded systems and software development.<br>
+      Passionate about building real-world experience through competitions and hands-on projects.
+    </p>
+    <div class="hero-actions">
+      <a href="#awards" class="btn-dark"><span data-zh>查看經歷</span><span data-en>View Awards</span></a>
+      <a href="#contact" class="btn-outline"><span data-zh>聯絡我</span><span data-en>Contact</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title"><span data-zh>技術能力</span><span data-en>Skills</span></h2>
+  </div>
+  <div class="skills-layout">
+    <div class="skills-intro reveal reveal-delay-1">
+      <p data-zh>擅長以程式語言結合開發板進行系統整合，從底層韌體到應用層均有實作經驗。</p>
+      <p data-en>Skilled in combining programming languages with development boards for system integration, with hands-on experience from firmware to application layer.</p>
+    </div>
+    <div class="skills-groups reveal reveal-delay-2">
+      <div>
+        <div class="skill-group-label"><span data-zh>程式語言</span><span data-en>Languages</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag accent">C++</span>
+          <span class="skill-tag">Python</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-label"><span data-zh>嵌入式系統 &amp; 開發板</span><span data-en>Embedded &amp; Boards</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag accent"><span data-zh>嵌入式系統</span><span data-en>Embedded Systems</span></span>
+          <span class="skill-tag">Raspberry Pi</span>
+          <span class="skill-tag">Arduino</span>
+          <span class="skill-tag"><span data-zh>微控制器應用</span><span data-en>MCU Applications</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title"><span data-zh>競賽與經歷</span><span data-en>Awards &amp; Experience</span></h2>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-row reveal">
+      <div class="tl-year">2025 / 04</div>
+      <div class="tl-body">
+        <span class="tl-badge hackathon"><span data-zh>黑客松 · 佳作</span><span data-en>Hackathon · Merit</span></span>
+        <h3 class="tl-title">
+          <span data-zh>教育部技職盃黑客松競賽 — 中區分區賽佳作</span>
+          <span data-en>MOE Vocational Skills Cup Hackathon — Central Region Merit Award</span>
+        </h3>
+        <div class="tl-org"><span data-zh>教育部 · 南臺科技大學「赫德及麥當勞群島」隊</span><span data-en>Ministry of Education · Team "Heard &amp; McDonald Islands", STUST</span></div>
+        <p class="tl-desc" data-zh>
+          與隊友黃偉源、林佑丞組成團隊，參加教育部 2025 年技職盃黑客松競賽中區分區賽，
+          以優異成績榮獲佳作，獲教育部部長鄭英耀頒發獎狀。
+        </p>
+        <p class="tl-desc" data-en>
+          Competed with teammates Huang Wei-Yuan and Lin Yu-Cheng in the 2025 MOE Vocational Skills Cup Hackathon (Central Region), earning a Merit Award presented by Minister of Education Cheng Ying-Yao.
+        </p>
+        <div class="tl-cert" onclick="openLightbox(this)">
+          <img src="certificate.jpg" alt="教育部獎狀" onerror="this.parentElement.style.display='none'">
+          <div class="tl-cert-label"><span data-zh>點擊放大獎狀</span><span data-en>Click to enlarge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-row reveal reveal-delay-1">
+      <div class="tl-year">2025</div>
+      <div class="tl-body">
+        <span class="tl-badge finalist"><span data-zh>入圍</span><span data-en>Finalist</span></span>
+        <h3 class="tl-title">
+          <span data-zh>2025 盛群盃第 20 屆單晶片微電腦應用設計競賽 — 入圍</span>
+          <span data-en>2025 Holtek Cup 20th MCU Application Design Contest — Finalist</span>
+        </h3>
+        <div class="tl-org"><span data-zh>盛群半導體（Holtek）</span><span data-en>Holtek Semiconductor Inc.</span></div>
+        <p class="tl-desc" data-zh>參加盛群半導體主辦之第 20 屆單晶片微電腦應用設計競賽，以嵌入式系統實作作品成功入圍。</p>
+        <p class="tl-desc" data-en>Entered the 20th Holtek Cup MCU Application Design Contest with an embedded systems project, successfully advancing to the finalist stage.</p>
+        <a href="https://www.holtek.com.tw/page/channel?mCode=Presentation_SeminarEvents&pCode=Events_n_Shows&" target="_blank" class="tl-link"><span data-zh>競賽官網</span><span data-en>Official Site</span> →</a>
+      </div>
+    </div>
+
+    <div class="timeline-row reveal reveal-delay-2">
+      <div class="tl-year"><span data-zh>近期</span><span data-en>Recent</span></div>
+      <div class="tl-body">
+        <span class="tl-badge award"><span data-zh>佳作</span><span data-en>Merit Award</span></span>
+        <h3 class="tl-title">
+          <span data-zh>第二十一屆數位訊號處理創思設計競賽 — 佳作</span>
+          <span data-en>21st DSP Creative Design Contest — Merit Award</span>
+        </h3>
+        <div class="tl-org"><span data-zh>南臺科技大學電機工程系主辦</span><span data-en>Dept. of Electrical Engineering, STUST</span></div>
+        <p class="tl-desc" data-zh>參加數位訊號處理創思設計競賽，以創新設計概念與實作成果榮獲佳作。</p>
+        <p class="tl-desc" data-en>Received a Merit Award at the DSP Creative Design Contest for an innovative design concept and implementation.</p>
+        <a href="https://dspcdc.ee.stust.edu.tw/" target="_blank" class="tl-link"><span data-zh>競賽官網</span><span data-en>Official Site</span> →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title"><span data-zh>聯絡我</span><span data-en>Contact</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <span class="contact-card-label">Email</span>
+      <a href="mailto:add930306@gmail.com" class="contact-card-value">add930306@gmail.com</a>
+    </div>
+    <div class="contact-card reveal reveal-delay-1">
+      <span class="contact-card-label"><span data-zh>學校</span><span data-en>University</span></span>
+      <span class="contact-card-value"><span data-zh>南臺科技大學 · 電機工程系</span><span data-en>STUST · Dept. of Electrical Engineering</span></span>
+    </div>
+    <div class="contact-card reveal reveal-delay-2">
+      <span class="contact-card-label"><span data-zh>所在地</span><span data-en>Location</span></span>
+      <span class="contact-card-value"><span data-zh>台南，台灣</span><span data-en>Tainan, Taiwan</span></span>
+    </div>
+  </div>
+  <p class="contact-note">// <span data-zh>歡迎競賽合作、專案邀請或技術交流</span><span data-en>Open to collaborations, project invitations, and technical discussions</span></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 張存瑀</span>
+  <span>Electrical Engineering · STUST</span>
+</footer>
+
+<script>
+/* ── FLUID GLASS BACKGROUND ── */
+(function() {
+  const canvas = document.getElementById('fluid-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, blobs;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initBlobs() {
+    blobs = [];
+    const colors = [
+      [29,78,216,0.18],   // blue
+      [100,160,255,0.13], // light blue
+      [200,220,255,0.12], // pale
+      [29,78,216,0.1],
+      [140,200,255,0.14],
+    ];
+    for (let i = 0; i < 5; i++) {
+      blobs.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: 180 + Math.random() * 240,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.28,
+        color: colors[i],
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.004 + Math.random() * 0.003,
+      });
+    }
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    blobs.forEach(b => {
+      b.x += b.vx + Math.sin(t * b.speed + b.phase) * 0.4;
+      b.y += b.vy + Math.cos(t * b.speed + b.phase * 1.3) * 0.3;
+      if (b.x < -b.r) b.x = W + b.r;
+      if (b.x > W + b.r) b.x = -b.r;
+      if (b.y < -b.r) b.y = H + b.r;
+      if (b.y > H + b.r) b.y = -b.r;
+
+      const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+      const [r,g2,bl,a] = b.color;
+      g.addColorStop(0, `rgba(${r},${g2},${bl},${a})`);
+      g.addColorStop(0.5, `rgba(${r},${g2},${bl},${a*0.5})`);
+      g.addColorStop(1, `rgba(${r},${g2},${bl},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initBlobs();
+  window.addEventListener('resize', () => { resize(); });
+  requestAnimationFrame(draw);
+})();
+
+/* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+/* ── LANGUAGE TOGGLE ── */
+let isEn = false;
+function toggleLang() {
+  isEn = !isEn;
+  document.body.classList.toggle('en', isEn);
+  document.getElementById('langBtn').textContent = isEn ? '中' : 'EN';
+}
+
+/* ── LIGHTBOX ── */
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  if (!img) return;
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
