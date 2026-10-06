@@ -10,254 +10,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #D4D1CA;
-  --bg2: #C8C5BE;
-  --text: #1A1916;
-  --muted: #6B6860;
-  --accent: #1D4ED8;
-  --accent-light: #EEF2FF;
-  --border: rgba(26,25,22,0.12);
-  --border-strong: rgba(26,25,22,0.22);
-  --card-bg: #DEDAD4;
-  --serif: 'Noto Serif TC', serif;
-  --sans: 'Noto Sans TC', sans-serif;
-  --mono: 'DM Mono', monospace;
-}
-
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg); color: var(--text);
-  font-family: var(--sans); font-size: 15px; line-height: 1.7;
-  -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
-
-#fluid-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.55; }
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 2.5rem; height: 56px;
-  background: rgba(212,209,202,0.85);
-  backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 0.5px solid var(--border);
-}
-.nav-logo { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: 0.02em; color: var(--text); text-decoration: none; }
-.nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
-.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
-.nav-links a:hover { color: var(--text); }
-.lang-btn {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
-  color: var(--muted); background: none; border: 0.5px solid var(--border-strong);
-  padding: 4px 10px; cursor: pointer; transition: all 0.2s;
-}
-.lang-btn:hover { color: var(--text); border-color: var(--text); }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh; position: relative; z-index: 1;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 0 2.5rem 4rem; overflow: hidden; border-top: none;
-}
-.hero-grid-bg {
-  position: absolute; inset: 0;
-  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 48px 48px; opacity: 0.5;
-}
-.hero-content { position: relative; z-index: 1; max-width: 760px; }
-.hero-eyebrow {
-  font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em;
-  color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem;
-  opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
-}
-.hero h1 {
-  font-family: var(--serif); font-size: clamp(3rem, 8vw, 6rem); font-weight: 700;
-  line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1.5rem;
-  opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
-}
-.hero h1 span { color: var(--accent); }
-.hero-desc {
-  font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.8; margin-bottom: 2.5rem;
-  opacity: 0; animation: fadeUp 0.8s 0.55s forwards;
-}
-[data-en] { display: none; }
-body.en [data-zh] { display: none; }
-body.en [data-en] { display: block; }
-body.en span[data-en] { display: inline; }
-body.en span[data-zh] { display: none; }
-
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.72s forwards; }
-.btn-dark {
-  background: var(--text); color: var(--bg); border: none; padding: 12px 24px;
-  font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
-  cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s;
-}
-.btn-dark:hover { opacity: 0.8; }
-.btn-outline {
-  background: transparent; color: var(--text); border: 0.5px solid var(--border-strong); padding: 12px 24px;
-  font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
-  cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s;
-}
-.btn-outline:hover { background: var(--bg2); }
-.hero-scroll {
-  position: absolute; bottom: 2rem; right: 2.5rem;
-  font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
-  writing-mode: vertical-rl; display: flex; align-items: center; gap: 8px;
-  opacity: 0; animation: fadeIn 1s 1.2s forwards;
-}
-.hero-scroll::after { content: ''; display: block; width: 0.5px; height: 40px; background: var(--muted); }
-.glass-pill {
-  display: inline-block; background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border: 0.5px solid rgba(255,255,255,0.55); border-radius: 999px; padding: 4px 14px;
-  font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.6s 0.05s forwards;
-}
-
-/* ── SECTIONS ── */
-section { padding: 5rem 2.5rem; border-top: 0.5px solid var(--border); position: relative; z-index: 1; }
-.section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
-.section-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
-.section-title { font-family: var(--serif); font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
-
-/* ── ABOUT ── */
-.about-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start; }
-.about-text p { font-size: 15px; color: var(--text); line-height: 1.95; margin-bottom: 1rem; }
-.about-text strong { font-weight: 500; }
-.facts { display: flex; flex-direction: column; gap: 1.2rem; }
-.fact { border-left: 1.5px solid var(--accent); padding-left: 14px; }
-.fact-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.fact-value { font-family: var(--serif); font-size: 17px; font-weight: 500; }
-
-/* ── TAGS ── */
-.skills-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
-.skills-intro { font-size: 14px; color: var(--muted); line-height: 1.8; }
-.skills-groups { display: flex; flex-direction: column; gap: 2rem; }
-.skill-group-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
-.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.skill-tag {
-  font-family: var(--mono); font-size: 12px; color: var(--text); background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 0.5px solid var(--border-strong); padding: 6px 14px; letter-spacing: 0.04em; transition: all 0.2s;
-}
-.skill-tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
-.skill-tag.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-/* ── TIMELINE ── */
-.timeline { display: flex; flex-direction: column; }
-.timeline-row { display: grid; grid-template-columns: 140px 1fr; border-top: 0.5px solid var(--border); padding: 2rem 0; gap: 2rem; }
-.timeline-row:last-child { border-bottom: 0.5px solid var(--border); }
-.tl-year { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.06em; padding-top: 3px; }
-.tl-badge { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; margin-bottom: 10px; }
-.tl-badge.award { background: #FEF9C3; color: #854D0E; border: 0.5px solid #FDE047; }
-.tl-badge.finalist { background: var(--accent-light); color: var(--accent); border: 0.5px solid #BFDBFE; }
-.tl-badge.hackathon { background: #F0FDF4; color: #166534; border: 0.5px solid #BBF7D0; }
-.tl-badge.service { background: #FFF1F2; color: #9F1239; border: 0.5px solid #FECDD3; }
-.tl-badge.edu { background: rgba(255,255,255,0.6); color: var(--text); border: 0.5px solid var(--border-strong); }
-.tl-title { font-family: var(--serif); font-size: 18px; font-weight: 500; margin-bottom: 6px; }
-.tl-org { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-.tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
-.tl-role { font-size: 13px; color: var(--text); margin-top: 6px; }
-.tl-role b { font-weight: 500; color: var(--accent); }
-.tl-link {
-  display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--accent);
-  letter-spacing: 0.06em; text-decoration: none; border-bottom: 0.5px solid var(--accent); padding-bottom: 1px; transition: opacity 0.2s;
-}
-.tl-link:hover { opacity: 0.7; }
-.tl-cert { margin-top: 14px; margin-right: 10px; display: inline-block; cursor: pointer; vertical-align: top; }
-.tl-cert img { width: 110px; height: auto; border: 0.5px solid var(--border-strong); filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08)); transition: transform 0.2s, filter 0.2s; display: block; }
-.tl-cert:hover img { transform: scale(1.04); filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15)); }
-.tl-cert-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-top: 5px; }
-
-/* ── PROJECTS ── */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-.project-card {
-  background: rgba(255,255,255,0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 0.5px solid var(--border-strong); padding: 1.75rem; display: flex; flex-direction: column; gap: 10px;
-  transition: transform 0.25s, background 0.25s;
-}
-.project-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.6); }
-.project-card.featured { grid-column: 1 / -1; }
-.project-kicker { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
-.project-title { font-family: var(--serif); font-size: 20px; font-weight: 700; line-height: 1.35; }
-.project-desc { font-size: 13.5px; color: var(--muted); line-height: 1.8; }
-.project-desc b { color: var(--text); font-weight: 500; }
-.project-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.project-meta span { font-family: var(--mono); font-size: 11px; padding: 3px 9px; border: 0.5px solid var(--border-strong); background: rgba(255,255,255,0.55); }
-.featured-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 2rem; align-items: start; }
-.featured-images { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.featured-images figure { cursor: pointer; }
-.featured-images img { width: 100%; height: 150px; object-fit: cover; border: 0.5px solid var(--border-strong); display: block; transition: transform 0.2s; }
-.featured-images img:hover { transform: scale(1.02); }
-.featured-images figcaption { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; }
-.arch { font-family: var(--mono); font-size: 12px; color: var(--text); background: rgba(255,255,255,0.55); border: 0.5px dashed var(--border-strong); padding: 10px 12px; line-height: 1.9; }
-
-/* ── LIGHTBOX ── */
-.lightbox { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,10,10,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); align-items: center; justify-content: center; cursor: zoom-out; }
-.lightbox.open { display: flex; animation: fadeIn 0.25s ease; }
-.lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 24px 80px rgba(0,0,0,0.5); border-radius: 2px; animation: zoomIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-.lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); cursor: pointer; background: none; border: none; transition: color 0.2s; }
-.lightbox-close:hover { color: white; }
-
-/* ── CONTACT ── */
-.contact-section { background: var(--text); color: var(--bg); }
-.contact-section .section-title { color: var(--bg); }
-.contact-section .section-num { color: rgba(247,245,240,0.45); }
-.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.contact-card { border: 0.5px solid rgba(247,245,240,0.2); padding: 1.5rem; display: flex; flex-direction: column; gap: 6px; background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background 0.2s; }
-.contact-card:hover { background: rgba(255,255,255,0.08); }
-.contact-card-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,245,240,0.45); }
-.contact-card-value { font-size: 14px; color: var(--bg); text-decoration: none; word-break: break-all; transition: opacity 0.2s; }
-a.contact-card-value:hover { opacity: 0.7; }
-.contact-note { margin-top: 3rem; font-size: 13px; color: rgba(247,245,240,0.4); font-family: var(--mono); letter-spacing: 0.04em; }
-
-footer { background: var(--text); border-top: 0.5px solid rgba(247,245,240,0.1); padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
-footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240,0.3); letter-spacing: 0.08em; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes zoomIn { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1); }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-@media (max-width: 900px) {
-  .nav-links li.hide-sm { display: none; }
-}
-@media (max-width: 768px) {
-  nav { padding: 0 1.25rem; }
-  .nav-links { gap: 1rem; }
-  .hero { padding: 0 1.25rem 3rem; }
-  section { padding: 3.5rem 1.25rem; }
-  .skills-layout, .about-layout, .featured-layout { grid-template-columns: 1fr; gap: 2rem; }
-  .timeline-row { grid-template-columns: 1fr; gap: 0.5rem; }
-  footer { flex-direction: column; gap: 6px; text-align: center; }
-}
-</style>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/main.js"></script>
 </head>
 <body>
 
 <canvas id="fluid-canvas"></canvas>
+<div id="progress"></div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">ESC / 關閉</button>
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<nav>
+<nav class="glass-nav">
   <a href="#" class="nav-logo">張存瑀</a>
   <ul class="nav-links">
     <li class="hide-sm"><a href="#about"><span data-zh>關於</span><span data-en>About</span></a></li>
     <li><a href="#projects"><span data-zh>專題</span><span data-en>Projects</span></a></li>
+    <li><a href="research.html"><span data-zh>研究</span><span data-en>Research</span></a></li>
     <li><a href="#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
     <li class="hide-sm"><a href="#skills"><span data-zh>技術</span><span data-en>Skills</span></a></li>
     <li><a href="#contact"><span data-zh>聯絡</span><span data-en>Contact</span></a></li>
+    <li><button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="深色模式 / Dark mode">☾</button></li>
     <li><button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button></li>
   </ul>
 </nav>
@@ -270,6 +45,9 @@ footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240
     <p class="hero-eyebrow" data-zh>南臺科技大學 · 電機工程系 控制與晶片組</p>
     <p class="hero-eyebrow" data-en style="opacity:0;animation:fadeUp 0.6s 0.2s forwards;">Southern Taiwan University of Science and Technology</p>
     <h1>張<span>存</span>瑀</h1>
+    <div class="typing" id="typing"
+      data-lines-zh='["嵌入式系統 × 生理訊號處理","訊號品質評估 × 輕量化模型","讓系統「可靠地」察覺異常"]'
+      data-lines-en='["Embedded Systems × Biosignal Processing","Signal Quality × Lightweight Models","Detecting anomalies — reliably"]'></div>
     <p class="hero-desc" data-zh>
       電機工程系畢業，專注於嵌入式系統、生理訊號處理與邊緣智慧。<br>
       從感測器、微控制器到 App 與資料庫，喜歡把一套系統從頭到尾做出來，並思考如何讓它「可靠地」察覺異常。
@@ -280,8 +58,13 @@ footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-dark"><span data-zh>查看專題作品</span><span data-en>View Projects</span></a>
-      <a href="#awards" class="btn-outline"><span data-zh>競賽經歷</span><span data-en>Awards</span></a>
+      <a href="research.html" class="btn-glass glass"><span data-zh>研究興趣</span><span data-en>Research</span></a>
       <a href="#contact" class="btn-outline"><span data-zh>聯絡我</span><span data-en>Contact</span></a>
+    </div>
+    <div class="stats">
+      <div class="stat glass"><div class="stat-num" data-count="4">0</div><div class="stat-label"><span data-zh>專題作品</span><span data-en>Projects</span></div></div>
+      <div class="stat glass"><div class="stat-num" data-count="3">0</div><div class="stat-label"><span data-zh>競賽獲獎</span><span data-en>Awards</span></div></div>
+      <div class="stat glass"><div class="stat-num" data-count="7">0</div><div class="stat-label"><span data-zh>競賽與經歷</span><span data-en>Experiences</span></div></div>
     </div>
   </div>
   <div class="hero-scroll">scroll</div>
@@ -325,7 +108,7 @@ footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240
   </div>
   <div class="projects-grid">
 
-    <article class="project-card featured reveal">
+    <a href="projects/smart-care.html" class="project-card featured glass tilt reveal">
       <div class="featured-layout">
         <div>
           <div class="project-kicker"><span data-zh>大學專題 · DSP 創思競賽佳作</span><span data-en>Capstone · DSP Contest Merit Award</span></div>
@@ -336,31 +119,34 @@ footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240
           <p class="tl-role" data-zh><b>我的負責：</b>App 與資料庫開發（Flutter、BLE 資料接收、SQLite、警報通知）；盛群盃版本中除硬體外之軟體皆由我負責。</p>
           <p class="tl-role" data-en><b>My role:</b> app &amp; database development (Flutter, BLE, SQLite, alert notifications); all non-hardware software for the Holtek Cup version.</p>
           <div class="project-meta"><span>Flutter</span><span>BLE</span><span>SQLite</span><span>PostgreSQL</span><span>Raspberry Pi 5</span><span>HT32</span></div>
+          <div class="more"><span data-zh>查看專題詳細介紹</span><span data-en>Read the full case study</span></div>
         </div>
         <div class="featured-images">
-          <figure onclick="openLightbox(this)"><img src="images/smart_care_system.jpg" alt="系統實際架設" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>系統實際架設</span><span data-en>System setup</span></figcaption></figure>
-          <figure onclick="openLightbox(this)"><img src="images/smart_care_monitor.jpg" alt="監控畫面" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>樹莓派監控畫面</span><span data-en>Monitor UI</span></figcaption></figure>
+          <figure><img src="images/smart_care_system.jpg" alt="系統實際架設" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>系統實際架設</span><span data-en>System setup</span></figcaption></figure>
+          <figure><img src="images/smart_care_monitor.jpg" alt="監控畫面" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>樹莓派監控畫面</span><span data-en>Monitor UI</span></figcaption></figure>
         </div>
       </div>
-    </article>
+    </a>
 
-    <article class="project-card reveal reveal-delay-1">
+    <a href="projects/smart-companion.html" class="project-card glass tilt reveal reveal-delay-1">
       <div class="project-kicker"><span data-zh>校內競賽第三名</span><span data-en>3rd Place · Dept. Contest</span></div>
       <h3 class="project-title"><span data-zh>智能護伴：視覺載具與機械手臂</span><span data-en>Smart Companion: Vision Vehicle &amp; Robotic Arm</span></h3>
       <p class="project-desc" data-zh>結合視覺載具與機械手臂的照護輔助作品。我負責<b>機械手臂的藥品抓取</b>，為了讓手臂準確到位而補強正逆運動學，並針對載具停止位置的偏差，依實際位置即時調整手臂姿態。</p>
       <p class="project-desc" data-en>A care-assist robot combining a vision vehicle and a robotic arm. I handled <b>medicine grasping with the arm</b>, applying forward/inverse kinematics and compensating for the vehicle's stopping-position error in real time.</p>
       <div class="project-meta"><span>Kinematics</span><span>Robotic Arm</span><span>Computer Vision</span></div>
-    </article>
+      <div class="more"><span data-zh>詳細介紹</span><span data-en>Details</span></div>
+    </a>
 
-    <article class="project-card reveal reveal-delay-2">
+    <a href="projects/traffic-platform.html" class="project-card glass tilt reveal reveal-delay-2">
       <div class="project-kicker"><span data-zh>技職盃黑客松 中區佳作</span><span data-en>Hackathon · Merit Award</span></div>
       <h3 class="project-title"><span data-zh>交通影像異常監測平台</span><span data-en>Traffic Image Anomaly Monitoring Platform</span></h3>
       <p class="project-desc" data-zh>以移動載具搭配影像偵測的監測平台。我負責<b>車輛硬體製作</b>：壓克力車體的材料切割、鑽孔與組裝，四馬達驅動，讓團隊的影像與控制程式能在實體載具上測試與展示。</p>
       <p class="project-desc" data-en>A monitoring platform built on a mobile vehicle with image detection. I built <b>the vehicle hardware</b> — cutting, drilling and assembling the acrylic chassis with a four-motor drive.</p>
       <div class="project-meta"><span>Hardware</span><span>Motor Drive</span><span>Prototyping</span></div>
-    </article>
+      <div class="more"><span data-zh>詳細介紹</span><span data-en>Details</span></div>
+    </a>
 
-    <article class="project-card reveal reveal-delay-3">
+    <article class="project-card glass tilt reveal reveal-delay-3">
       <div class="project-kicker"><span data-zh>AI 課程期末專題</span><span data-en>AI Course Project</span></div>
       <h3 class="project-title"><span data-zh>植物病害影像分類</span><span data-en>Plant Disease Image Classification</span></h3>
       <p class="project-desc" data-zh>以 <b>ResNet、VGG16</b> 等卷積神經網路架構重現論文方法，比較不同模型在植物病害影像上的分類表現。</p>
@@ -551,74 +337,15 @@ footer span { font-family: var(--mono); font-size: 11px; color: rgba(247,245,240
 
 <footer>
   <span>© 2026 張存瑀</span>
+  <span class="visit-count" id="busuanzi_container_site_pv" style="display:none">
+    <span data-zh>訪客</span><span data-en>Visitors</span> <b id="busuanzi_value_site_uv">—</b>
+    &nbsp;·&nbsp; <span data-zh>瀏覽</span><span data-en>Views</span> <b id="busuanzi_value_site_pv">—</b>
+  </span>
   <span>Electrical Engineering · STUST</span>
 </footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<script>
-/* ── FLUID GLASS BACKGROUND ── */
-(function() {
-  const canvas = document.getElementById('fluid-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, blobs;
-  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  function initBlobs() {
-    blobs = [];
-    const colors = [[29,78,216,0.18],[100,160,255,0.13],[200,220,255,0.12],[29,78,216,0.1],[140,200,255,0.14]];
-    for (let i = 0; i < 5; i++) {
-      blobs.push({ x: Math.random() * W, y: Math.random() * H, r: 180 + Math.random() * 240,
-        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.28, color: colors[i],
-        phase: Math.random() * Math.PI * 2, speed: 0.004 + Math.random() * 0.003 });
-    }
-  }
-  function draw(t) {
-    ctx.clearRect(0, 0, W, H);
-    blobs.forEach(b => {
-      b.x += b.vx + Math.sin(t * b.speed + b.phase) * 0.4;
-      b.y += b.vy + Math.cos(t * b.speed + b.phase * 1.3) * 0.3;
-      if (b.x < -b.r) b.x = W + b.r; if (b.x > W + b.r) b.x = -b.r;
-      if (b.y < -b.r) b.y = H + b.r; if (b.y > H + b.r) b.y = -b.r;
-      const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-      const [r,g2,bl,a] = b.color;
-      g.addColorStop(0, `rgba(${r},${g2},${bl},${a})`);
-      g.addColorStop(0.5, `rgba(${r},${g2},${bl},${a*0.5})`);
-      g.addColorStop(1, `rgba(${r},${g2},${bl},0)`);
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  resize(); initBlobs();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(draw);
-})();
 
-/* ── SCROLL REVEAL ── */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-/* ── LANGUAGE TOGGLE ── */
-let isEn = false;
-function toggleLang() {
-  isEn = !isEn;
-  document.body.classList.toggle('en', isEn);
-  document.getElementById('langBtn').textContent = isEn ? '中' : 'EN';
-}
-
-/* ── LIGHTBOX ── */
-function openLightbox(el) {
-  const img = el.querySelector('img');
-  if (!img) return;
-  document.getElementById('lightbox-img').src = img.src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-</script>
 
 </body>
 </html>

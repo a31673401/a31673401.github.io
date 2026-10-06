@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>研究興趣 — 張存瑀</title>
+<meta name="description" content="張存瑀的研究興趣：生理訊號品質評估、輕量化模型與邊緣 AI。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFENEVEOCIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2LDE2KSByb3RhdGUoLTM1KSI+CiAgICA8cmVjdCB4PSItMiIgeT0iLTciIHdpZHRoPSI0IiBoZWlnaHQ9IjE0IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICAgIDxyZWN0IHg9Ii05IiB5PSItMiIgd2lkdGg9IjciIGhlaWdodD0iNCIgcng9IjEiIGZpbGw9IiM5M0M1RkQiLz4KICAgIDxyZWN0IHg9IjIiIHk9Ii0yIiB3aWR0aD0iNyIgaGVpZ2h0PSI0IiByeD0iMSIgZmlsbD0iIzkzQzVGRCIvPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjMiIGZpbGw9IndoaXRlIi8+CiAgICA8bGluZSB4MT0iNSIgeTE9Ii01IiB4Mj0iOSIgeTI9Ii05IiBzdHJva2U9IiM5M0M1RkQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxjaXJjbGUgY3g9IjEwIiBjeT0iLTEwIiByPSIxLjUiIGZpbGw9IiNGQkJGMjQiLz4KICA8L2c+Cjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/main.js"></script>
+</head>
+<body>
+<canvas id="fluid-canvas"></canvas>
+<div id="progress"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">ESC / 關閉</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<nav class="glass-nav">
+  <a href="index.html" class="nav-logo">張存瑀</a>
+  <ul class="nav-links">
+    <li class="hide-sm"><a href="index.html#about"><span data-zh>關於</span><span data-en>About</span></a></li>
+    <li><a href="index.html#projects"><span data-zh>專題</span><span data-en>Projects</span></a></li>
+    <li><a href="research.html"><span data-zh>研究</span><span data-en>Research</span></a></li>
+    <li><a href="index.html#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
+    <li><button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="深色模式 / Dark mode">☾</button></li>
+    <li><button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<header class="page-hero">
+  <div class="glass-pill">Research Interests</div>
+  <h1><span data-zh>讓生理監測「可靠地」察覺異常</span><span data-en>Making physiological monitoring detect anomalies — reliably</span></h1>
+  <p class="lead" data-zh>我的研究興趣是<b>資源受限裝置上的生理訊號分析</b>：在微控制器等級的硬體上，即時判斷心電／PPG 訊號是否可信，並以輕量化模型完成異常偵測，降低假警報。</p>
+  <p class="lead" data-en>I am interested in <b>physiological signal analysis on resource-constrained devices</b>: judging in real time whether ECG/PPG signals can be trusted on MCU-class hardware, and detecting anomalies with lightweight models to reduce false alarms.</p>
+  <div class="chips"><span class="chip glass">ECG / PPG</span><span class="chip glass">Signal Quality Assessment</span><span class="chip glass">Lightweight 1-D CNN</span><span class="chip glass">Edge AI</span><span class="chip glass">Multimodal Fusion</span></div>
+</header>
+<section>
+  <div class="prose">
+    <h3 class="reveal"><span data-zh>起點</span><span data-en>Where it started</span></h3>
+    <p data-zh class="reveal">做多床位版本的智慧看護系統時，系統常因病人翻身或電極鬆脫而誤發警報。這讓我意識到：把感測器接起來並不難，<b>難的是判斷「這筆資料可不可信」、「這個異常是不是真的」</b>。在醫院中，大量假警報會造成「警報疲乏」，反而讓真正的異常被忽略。</p>
+    <p data-en class="reveal">While building the multi-bed system, motion and loose electrodes kept triggering false alarms. Connecting sensors is easy; <b>the hard part is knowing whether the data can be trusted and whether an anomaly is real</b>. In hospitals, too many false alarms lead to alarm fatigue.</p>
+
+    <h3 class="reveal"><span data-zh>想回答的問題</span><span data-en>Questions</span></h3>
+    <div class="challenge reveal">
+      <div class="glass"><div class="k">Q1 · <span data-zh>訊號可信度</span><span data-en>Signal quality</span></div><p data-zh style="margin:0">如何在有限的運算資源下，即時評估 ECG／PPG 的訊號品質，並在品質不足時避免錯誤判斷？</p><p data-en style="margin:0">How can we assess ECG/PPG quality in real time with limited compute, and avoid wrong decisions when quality is poor?</p></div>
+      <div class="glass"><div class="k">Q2 · <span data-zh>輕量化辨識</span><span data-en>Lightweight models</span></div><p data-zh style="margin:0">如何讓心律異常辨識模型在微控制器上執行，同時維持可接受的準確率？</p><p data-en style="margin:0">How can arrhythmia models run on microcontrollers while keeping acceptable accuracy?</p></div>
+      <div class="glass" style="grid-column:1/-1"><div class="k">Q3 · <span data-zh>多模態融合</span><span data-en>Multimodal fusion</span></div><p data-zh style="margin:0">如何結合多種生理訊號與其品質資訊，在降低假警報的同時，維持對真實事件的靈敏度？</p><p data-en style="margin:0">How can multiple signals and their quality be fused to cut false alarms while staying sensitive to real events?</p></div>
+    </div>
+
+    <h3 class="reveal"><span data-zh>規劃的方法</span><span data-en>Planned approach</span></h3>
+    <ol class="steps reveal">
+      <li data-zh><b>資料與基準</b>：使用 MIT-BIH、PhysioNet/CinC 2017、PPG-DaLiA 等公開資料庫，先以 Pan-Tompkins 等傳統方法建立基準。</li>
+      <li data-en><b>Data &amp; baselines</b>: public datasets (MIT-BIH, PhysioNet/CinC 2017, PPG-DaLiA) with classical baselines such as Pan-Tompkins.</li>
+      <li data-zh><b>訊號品質指標</b>：設計可在 MCU 上即時計算的指標，例如模板相關性、頻譜能量比、ECG 與 PPG 心率一致性。</li>
+      <li data-en><b>Quality indices</b>: MCU-friendly indices such as template correlation, spectral energy ratio and ECG–PPG heart-rate agreement.</li>
+      <li data-zh><b>輕量化模型</b>：以一維 CNN 為主，透過 8 位元整數量化等方法壓縮，評估模型大小、記憶體與延遲。</li>
+      <li data-en><b>Lightweight models</b>: 1-D CNNs compressed with 8-bit integer quantization; measure size, memory and latency.</li>
+      <li data-zh><b>融合與警報決策</b>：以品質指標作為權重融合多種訊號的判斷，並與固定門檻法比較。</li>
+      <li data-en><b>Fusion &amp; alarms</b>: quality-weighted fusion compared against fixed thresholds.</li>
+      <li data-zh><b>系統驗證</b>：部署在智慧看護平台，以靈敏度、F1、每小時假警報次數、延遲與功耗評估。</li>
+      <li data-en><b>Validation</b>: deploy on the smart-nursing platform; evaluate sensitivity, F1, false alarms per hour, latency and power.</li>
+    </ol>
+
+    <h3 class="reveal"><span data-zh>正在讀的文獻</span><span data-en>Reading list</span></h3>
+    <ul class="ref-list reveal"><li>J. Pan and W. J. Tompkins, "A real-time QRS detection algorithm," IEEE Trans. Biomed. Eng., vol. BME-32, no. 3, pp. 230–236, 1985. <a href="https://doi.org/10.1109/TBME.1985.325532" target="_blank" rel="noopener">https://doi.org/10.1109/TBME.1985.325532</a></li><li>J. Allen, "Photoplethysmography and its application in clinical physiological measurement," Physiol. Meas., vol. 28, no. 3, pp. R1–R39, 2007. <a href="https://doi.org/10.1088/0967-3334/28/3/R01" target="_blank" rel="noopener">https://doi.org/10.1088/0967-3334/28/3/R01</a></li><li>Q. Li and G. D. Clifford, "Dynamic time warping and machine learning for signal quality assessment of pulsatile signals," Physiol. Meas., vol. 33, no. 9, pp. 1491–1501, 2012. <a href="https://doi.org/10.1088/0967-3334/33/9/1491" target="_blank" rel="noopener">https://doi.org/10.1088/0967-3334/33/9/1491</a></li><li>S. Kiranyaz, T. Ince, and M. Gabbouj, "Real-time patient-specific ECG classification by 1-D convolutional neural networks," IEEE Trans. Biomed. Eng., vol. 63, no. 3, pp. 664–675, 2016. <a href="https://doi.org/10.1109/TBME.2015.2468589" target="_blank" rel="noopener">https://doi.org/10.1109/TBME.2015.2468589</a></li><li>A. Y. Hannun et al., "Cardiologist-level arrhythmia detection and classification in ambulatory electrocardiograms using a deep neural network," Nature Medicine, vol. 25, pp. 65–69, 2019. <a href="https://doi.org/10.1038/s41591-018-0268-3" target="_blank" rel="noopener">https://doi.org/10.1038/s41591-018-0268-3</a></li><li>G. B. Moody and R. G. Mark, "The impact of the MIT-BIH Arrhythmia Database," IEEE Eng. Med. Biol. Mag., vol. 20, no. 3, pp. 45–50, 2001. <a href="https://doi.org/10.1109/51.932724" target="_blank" rel="noopener">https://doi.org/10.1109/51.932724</a></li><li>B. Jacob et al., "Quantization and training of neural networks for efficient integer-arithmetic-only inference," in Proc. IEEE/CVF CVPR, 2018. <a href="https://doi.org/10.1109/CVPR.2018.00286" target="_blank" rel="noopener">https://doi.org/10.1109/CVPR.2018.00286</a></li><li>J. Lin, W.-M. Chen, Y. Lin, J. Cohn, C. Gan, and S. Han, "MCUNet: Tiny deep learning on IoT devices," in Proc. NeurIPS, 2020. <a href="https://arxiv.org/abs/2007.10319" target="_blank" rel="noopener">https://arxiv.org/abs/2007.10319</a></li><li>S. Sendelbach and M. Funk, "Alarm fatigue: A patient safety concern," AACN Advanced Critical Care, vol. 24, no. 4, pp. 378–386, 2013. <a href="https://doi.org/10.4037/NCI.0b013e3182a903f9" target="_blank" rel="noopener">https://doi.org/10.4037/NCI.0b013e3182a903f9</a></li></ul>
+  </div>
+</section>
+<div class="page-nav">
+  <a class="btn-outline" href="index.html">← <span data-zh>回首頁</span><span data-en>Home</span></a>
+  <a class="btn-glass glass" href="projects/smart-care.html"><span data-zh>看相關專題：智慧看護</span><span data-en>Related project: Smart Nursing</span> →</a>
+</div>
+
+<footer>
+  <span>© 2026 張存瑀</span>
+  <span>Electrical Engineering · STUST</span>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

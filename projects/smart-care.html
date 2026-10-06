@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智慧看護系統 — 張存瑀</title>
+<meta name="description" content="智慧看護系統：點滴監測與生理訊號量測、多床位集中監控。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFENEVEOCIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2LDE2KSByb3RhdGUoLTM1KSI+CiAgICA8cmVjdCB4PSItMiIgeT0iLTciIHdpZHRoPSI0IiBoZWlnaHQ9IjE0IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICAgIDxyZWN0IHg9Ii05IiB5PSItMiIgd2lkdGg9IjciIGhlaWdodD0iNCIgcng9IjEiIGZpbGw9IiM5M0M1RkQiLz4KICAgIDxyZWN0IHg9IjIiIHk9Ii0yIiB3aWR0aD0iNyIgaGVpZ2h0PSI0IiByeD0iMSIgZmlsbD0iIzkzQzVGRCIvPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjMiIGZpbGw9IndoaXRlIi8+CiAgICA8bGluZSB4MT0iNSIgeTE9Ii01IiB4Mj0iOSIgeTI9Ii05IiBzdHJva2U9IiM5M0M1RkQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxjaXJjbGUgY3g9IjEwIiBjeT0iLTEwIiByPSIxLjUiIGZpbGw9IiNGQkJGMjQiLz4KICA8L2c+Cjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/main.js"></script>
+</head>
+<body>
+<canvas id="fluid-canvas"></canvas>
+<div id="progress"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">ESC / 關閉</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<nav class="glass-nav">
+  <a href="../index.html" class="nav-logo">張存瑀</a>
+  <ul class="nav-links">
+    <li class="hide-sm"><a href="../index.html#about"><span data-zh>關於</span><span data-en>About</span></a></li>
+    <li><a href="../index.html#projects"><span data-zh>專題</span><span data-en>Projects</span></a></li>
+    <li><a href="../research.html"><span data-zh>研究</span><span data-en>Research</span></a></li>
+    <li><a href="../index.html#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
+    <li><button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="深色模式 / Dark mode">☾</button></li>
+    <li><button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<header class="page-hero">
+  <a class="crumb" href="../index.html#projects">← <span data-zh>返回專題作品</span><span data-en>Back to projects</span></a>
+  <div class="glass-pill" style="margin-top:1.2rem">Capstone · DSP Contest Merit Award</div>
+  <h1><span data-zh>智慧看護系統</span><span data-en>Smart Nursing System</span><br><span style="font-size:.6em;color:var(--muted)"><span data-zh>從單床點滴監測到多床位集中監控</span><span data-en>From single-bed IV monitoring to multi-bed centralized monitoring</span></span></h1>
+  <p class="lead" data-zh>一套整合點滴監測、生理訊號量測、警報通知與歷史紀錄的照護系統。大學專題完成單床版本，並以此參加盛群盃（入圍）；之後擴充為多床位集中監控系統，獲得第 21 屆數位訊號處理創思設計競賽健康照護應用組佳作。</p>
+  <p class="lead" data-en>A care system that combines IV drip monitoring, vital-sign sensing, alerts and history logging. The single-bed version was my capstone (Holtek Cup finalist); it was later extended into a multi-bed centralized system that won a Merit Award at the 21st DSP Creative Design Contest.</p>
+  <div class="chips">
+    <span class="chip glass">HT32F52367</span><span class="chip glass">BMduino</span><span class="chip glass">Raspberry Pi 5</span>
+    <span class="chip glass">Flutter</span><span class="chip glass">BLE</span><span class="chip glass">SQLite</span><span class="chip glass">PostgreSQL</span>
+  </div>
+</header>
+
+<section>
+  <div class="prose">
+    <div class="callout glass reveal">
+      <div class="k"><span data-zh>我的負責</span><span data-en>My role</span></div>
+      <p data-zh style="margin:0"><b>App 與資料庫開發</b>：Flutter App、BLE 資料接收、SQLite 歷史紀錄、警報與推播通知（專題貢獻度 30%）。盛群盃版本中，<b>除硬體以外的軟體皆由我負責</b>。</p>
+      <p data-en style="margin:0"><b>App &amp; database development</b>: Flutter app, BLE data reception, SQLite history and alert notifications (30% project contribution). For the Holtek Cup version I handled <b>all software except the hardware</b>.</p>
+    </div>
+
+    <h3 class="reveal"><span data-zh>為什麼做這個</span><span data-en>Motivation</span></h3>
+    <p data-zh class="reveal">臥床患者的點滴與生命徵象多仰賴人工巡視，夜間巡視頻率低時容易出現滴空、滴速不穩或異常延遲發現。我們希望用一套低成本的設備，同時監測點滴與多項生理指標，並在異常時即時通知照護者。</p>
+    <p data-en class="reveal">IV drips and vital signs of bedridden patients are mostly checked by manual rounds, so empty drips, unstable flow or late detection happen — especially at night. We wanted a low-cost device that monitors both and alerts caregivers immediately.</p>
+
+    <h3 class="reveal"><span data-zh>系統架構</span><span data-en>Architecture</span></h3>
+    <p data-zh class="reveal">系統分為<b>感測層、控制層、通訊層</b>：感測器將物理量轉為電訊號，HT32 微控制器負責擷取、判斷與輸出，再以藍牙傳到手機、UART 傳到樹莓派監控畫面。</p>
+    <p data-en class="reveal">Three layers — <b>sensing, control and communication</b>. Sensors convert physical quantities to signals, the HT32 MCU acquires and decides, then data goes to the phone over BLE and to a Raspberry Pi monitor over UART.</p>
+    <div class="gallery reveal">
+      <figure onclick="openLightbox(this)"><img class="contain invert-dark" src="../images/sc_arch.jpg" alt="系統架構"><figcaption><span data-zh>系統架構方塊圖</span><span data-en>System block diagram</span></figcaption></figure>
+      <figure onclick="openLightbox(this)"><img class="contain" src="../images/sc_flow.jpg" alt="流程圖"><figcaption><span data-zh>下位機流程圖</span><span data-en>MCU flow chart</span></figcaption></figure>
+      <figure onclick="openLightbox(this)"><img class="contain" src="../images/sc_json.jpg" alt="JSON 封包"><figcaption><span data-zh>MCU → 樹莓派 JSON 封包</span><span data-en>MCU → Pi JSON packet</span></figcaption></figure>
+    </div>
+    <table class="spec reveal">
+      <tr><th><span data-zh>元件</span><span data-en>Part</span></th><th><span data-zh>量測項目</span><span data-en>Measures</span></th><th><span data-zh>選用理由</span><span data-en>Why</span></th></tr>
+      <tr><td>XKC-Y25</td><td><span data-zh>點滴液位</span><span data-en>IV liquid level</span></td><td><span data-zh>非接觸式，安裝彈性佳</span><span data-en>Non-contact, flexible mounting</span></td></tr>
+      <tr><td>HX711 + Load cell</td><td><span data-zh>點滴重量</span><span data-en>IV weight</span></td><td><span data-zh>24-bit 解析度，可偵測細微變化</span><span data-en>24-bit resolution</span></td></tr>
+      <tr><td>MAX30102</td><td><span data-zh>心率、血氧</span><span data-en>Heart rate, SpO₂</span></td><td><span data-zh>單一模組同時提供兩項</span><span data-en>Both in one module</span></td></tr>
+      <tr><td>AD8232</td><td><span data-zh>心電訊號</span><span data-en>ECG</span></td><td><span data-zh>可偵測電極脫落</span><span data-en>Lead-off detection</span></td></tr>
+      <tr><td>BMH63K203</td><td><span data-zh>體溫</span><span data-en>Body temperature</span></td><td><span data-zh>紅外線非接觸式</span><span data-en>Infrared, non-contact</span></td></tr>
+      <tr><td>HT32F52367</td><td><span data-zh>主控 MCU</span><span data-en>Main MCU</span></td><td>ADC · UART · I²C · PWM</td></tr>
+    </table>
+
+    <h3 class="reveal"><span data-zh>我做的 App</span><span data-en>The app I built</span></h3>
+    <ol class="steps reveal">
+      <li data-zh><b>模組化架構</b>：介面、狀態管理、資料處理與警報邏輯、BLE 通訊、SQLite、模擬模式分開設計，方便維護與擴充。</li>
+      <li data-en><b>Modular design</b>: UI, state management, data &amp; alert logic, BLE, SQLite and a simulation mode are separate modules.</li>
+      <li data-zh><b>即時警報</b>：點滴液位 &lt; 20%、體溫 &gt; 38 °C、心率 &gt; 120 bpm 或血氧 &lt; 90% 時發出通知；只在「正常 → 警報」時觸發，避免重複轟炸。</li>
+      <li data-en><b>Real-time alerts</b>: drip level &lt; 20%, temperature &gt; 38 °C, HR &gt; 120 bpm or SpO₂ &lt; 90% trigger a notification — only on the normal-to-alarm transition to avoid repeated alerts.</li>
+      <li data-zh><b>離線紀錄</b>：每 10 秒寫入 SQLite（生理數據與點滴資料兩張表），可隨時查詢歷史。</li>
+      <li data-en><b>Offline history</b>: data saved to SQLite every 10 s (vitals and IV tables).</li>
+      <li data-zh><b>模擬模式</b>：沒有連上硬體時自動產生模擬數據，讓介面、資料庫、警報都能完整測試與展示。</li>
+      <li data-en><b>Simulation mode</b>: generates mock data when no hardware is connected, so the whole app can be tested and demoed.</li>
+    </ol>
+
+    <h3 class="reveal"><span data-zh>硬體與自動控速</span><span data-en>Hardware &amp; flow control</span></h3>
+    <p data-zh class="reveal">因為市售零件不合用，團隊以 3D 列印自製偏心輪、夾殼與點滴掛架。偏心輪旋轉時對點滴管週期性施壓、改變管徑，就能透過 PWM 控制馬達調整滴速。</p>
+    <p data-en class="reveal">The team 3D-printed an eccentric cam, clamp and IV hanger. The rotating cam squeezes the tube periodically, so motor PWM controls the drip rate.</p>
+    <div class="gallery reveal">
+      <figure onclick="openLightbox(this)"><img src="../images/smart_care_system.jpg" alt=""><figcaption><span data-zh>系統實際架設</span><span data-en>System setup</span></figcaption></figure>
+      <figure onclick="openLightbox(this)"><img src="../images/sc_pinch.jpg" alt=""><figcaption><span data-zh>偏心輪壓管機構</span><span data-en>Cam pinch mechanism</span></figcaption></figure>
+      <figure onclick="openLightbox(this)"><img src="../images/sc_hanger.jpg" alt=""><figcaption><span data-zh>3D 列印點滴掛架</span><span data-en>3D-printed hanger</span></figcaption></figure>
+      <figure onclick="openLightbox(this)"><img src="../images/smart_care_monitor.jpg" alt=""><figcaption><span data-zh>樹莓派監控畫面</span><span data-en>Raspberry Pi monitor</span></figcaption></figure>
+    </div>
+
+    <h3 class="reveal"><span data-zh>遇到的問題與解法</span><span data-en>Challenges &amp; fixes</span></h3>
+    <div class="challenge reveal">
+      <div class="glass"><div class="k"><span data-zh>問題</span><span data-en>Problem</span></div><p data-zh>3D 列印零件因公差沒算好，裝不起來。</p><p data-en>3D-printed parts did not fit due to tolerances.</p>
+        <div class="k"><span data-zh>解法</span><span data-en>Fix</span></div><p data-zh style="margin:0">重新量測，先低品質試印確認配合度再修正。</p><p data-en style="margin:0">Re-measured and test-printed at low quality before final prints.</p></div>
+      <div class="glass"><div class="k"><span data-zh>問題</span><span data-en>Problem</span></div><p data-zh>偏心輪壓不動、壓太緊或太鬆，無法控速。</p><p data-en>The cam squeezed too hard or too little to control flow.</p>
+        <div class="k"><span data-zh>解法</span><span data-en>Fix</span></div><p data-zh style="margin:0">更換不同軟硬度管材、改為半圈作動並重新設計外形。</p><p data-en style="margin:0">Tried different tubing, switched to half-turn actuation and redesigned the cam.</p></div>
+      <div class="glass"><div class="k"><span data-zh>問題</span><span data-en>Problem</span></div><p data-zh>心率感測器讀到的是光強度，不是心率。</p><p data-en>The PPG sensor outputs light intensity, not heart rate.</p>
+        <div class="k"><span data-zh>解法</span><span data-en>Fix</span></div><p data-zh style="margin:0">峰值偵測算出心跳間隔 Δt，BPM = 60/Δt，再以移動平均平滑並濾除異常值。</p><p data-en style="margin:0">Peak detection → beat interval Δt, BPM = 60/Δt, smoothed with a moving average and outlier rejection.</p></div>
+      <div class="glass"><div class="k"><span data-zh>問題</span><span data-en>Problem</span></div><p data-zh>病人翻身、電極鬆脫時常常誤發警報。</p><p data-en>Motion and loose electrodes caused false alarms.</p>
+        <div class="k"><span data-zh>啟發</span><span data-en>Takeaway</span></div><p data-zh style="margin:0">資料「有收到」不代表「可以相信」──這成為我想研究<b>訊號品質評估</b>的起點。</p><p data-en style="margin:0">Receiving data ≠ trusting data — the starting point of my interest in <b>signal quality assessment</b>.</p></div>
+    </div>
+
+    <h3 class="reveal"><span data-zh>成果</span><span data-en>Results</span></h3>
+    <ul class="reveal">
+      <li data-zh>完成點滴液位偵測、重量判定、自動滴速調整、App 即時顯示與警示等核心功能。</li>
+      <li data-en>Implemented level/weight sensing, automatic drip-rate control, real-time app display and alerts.</li>
+      <li data-zh>第 20 屆盛群盃 HOLTEK MCU 創意大賽 <b>入圍</b>；第 21 屆數位訊號處理創思設計競賽 <b>健康照護應用組佳作</b>。</li>
+      <li data-en>Finalist, 20th Holtek Cup; <b>Merit Award</b>, 21st DSP Creative Design Contest (Healthcare).</li>
+    </ul>
+    <div class="gallery reveal" style="grid-template-columns:minmax(220px,360px)">
+      <figure onclick="openLightbox(this)"><img class="contain" src="../images/dsp21_award.jpg" alt="DSP 佳作"><figcaption><span data-zh>第 21 屆 DSP 創思設計競賽 佳作獎狀</span><span data-en>21st DSP Contest Merit Award</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+<div class="page-nav">
+  <a class="btn-outline" href="../index.html#projects">← <span data-zh>所有專題</span><span data-en>All projects</span></a>
+  <a class="btn-glass glass" href="smart-companion.html"><span data-zh>下一個：智能護伴</span><span data-en>Next: Smart Companion</span> →</a>
+</div>
+
+<footer>
+  <span>© 2026 張存瑀</span>
+  <span>Electrical Engineering · STUST</span>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

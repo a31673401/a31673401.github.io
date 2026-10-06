@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能護伴 — 張存瑀</title>
+<meta name="description" content="智能護伴：視覺載具與機械手臂照護輔助作品。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFENEVEOCIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2LDE2KSByb3RhdGUoLTM1KSI+CiAgICA8cmVjdCB4PSItMiIgeT0iLTciIHdpZHRoPSI0IiBoZWlnaHQ9IjE0IiByeD0iMSIgZmlsbD0id2hpdGUiLz4KICAgIDxyZWN0IHg9Ii05IiB5PSItMiIgd2lkdGg9IjciIGhlaWdodD0iNCIgcng9IjEiIGZpbGw9IiM5M0M1RkQiLz4KICAgIDxyZWN0IHg9IjIiIHk9Ii0yIiB3aWR0aD0iNyIgaGVpZ2h0PSI0IiByeD0iMSIgZmlsbD0iIzkzQzVGRCIvPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjMiIGZpbGw9IndoaXRlIi8+CiAgICA8bGluZSB4MT0iNSIgeTE9Ii01IiB4Mj0iOSIgeTI9Ii05IiBzdHJva2U9IiM5M0M1RkQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxjaXJjbGUgY3g9IjEwIiBjeT0iLTEwIiByPSIxLjUiIGZpbGw9IiNGQkJGMjQiLz4KICA8L2c+Cjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/main.js"></script>
+</head>
+<body>
+<canvas id="fluid-canvas"></canvas>
+<div id="progress"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">ESC / 關閉</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<nav class="glass-nav">
+  <a href="../index.html" class="nav-logo">張存瑀</a>
+  <ul class="nav-links">
+    <li class="hide-sm"><a href="../index.html#about"><span data-zh>關於</span><span data-en>About</span></a></li>
+    <li><a href="../index.html#projects"><span data-zh>專題</span><span data-en>Projects</span></a></li>
+    <li><a href="../research.html"><span data-zh>研究</span><span data-en>Research</span></a></li>
+    <li><a href="../index.html#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
+    <li><button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="深色模式 / Dark mode">☾</button></li>
+    <li><button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<header class="page-hero">
+  <a class="crumb" href="../index.html#projects">← <span data-zh>返回專題作品</span><span data-en>Back to projects</span></a>
+  <div class="glass-pill" style="margin-top:1.2rem">Dept. Contest · 3rd Place</div>
+  <h1><span data-zh>智能護伴</span><span data-en>Smart Companion</span><br><span style="font-size:.6em;color:var(--muted)"><span data-zh>視覺載具 × 機械手臂的照護輔助作品</span><span data-en>A care-assist robot: vision vehicle × robotic arm</span></span></h1>
+  <p class="lead" data-zh>教育部新工程教育方法實驗與建構計畫「視覺輔助載具實習」的課程作品，結合會移動的視覺載具與機械手臂，模擬在照護場景中協助取藥。作品獲得電機系校內競賽（視覺載具）第三名。</p>
+  <p class="lead" data-en>A project from the MOE New Engineering Education program (Vision-Assisted Vehicle Lab), combining a mobile vision vehicle and a robotic arm to assist with fetching medicine. It won 3rd place in the department contest.</p>
+  <div class="chips"><span class="chip glass">Robotic Arm</span><span class="chip glass">Forward / Inverse Kinematics</span><span class="chip glass">Vision Vehicle</span></div>
+</header>
+<section>
+  <div class="prose">
+    <div class="callout glass reveal">
+      <div class="k"><span data-zh>我的負責</span><span data-en>My role</span></div>
+      <p data-zh style="margin:0"><b>機械手臂的藥品抓取</b>：讓手臂在載具停下後，準確移動到藥品位置並完成抓取。</p>
+      <p data-en style="margin:0"><b>Medicine grasping with the robotic arm</b>: moving the arm precisely to the medicine and picking it up after the vehicle stops.</p>
+    </div>
+    <h3 class="reveal"><span data-zh>過程</span><span data-en>How it went</span></h3>
+    <ol class="steps reveal">
+      <li data-zh><b>補強運動學</b>：寫手臂控制時發現，要讓夾爪準確到達目標，必須理解正運動學（關節角度 → 夾爪位置）與逆運動學（目標位置 → 關節角度），因此自行補強了這部分的理論。</li>
+      <li data-en><b>Learning kinematics</b>: to reach targets precisely I studied forward kinematics (joint angles → gripper pose) and inverse kinematics (target → joint angles).</li>
+      <li data-zh><b>遇到的問題</b>：載具每次停下來的位置都會有些偏差，手臂如果照固定角度動作就會抓空。</li>
+      <li data-en><b>The problem</b>: the vehicle never stopped at exactly the same spot, so fixed arm motions missed the target.</li>
+      <li data-zh><b>解法</b>：依載具實際停下的位置，即時調整手臂的目標姿態，而不是只跑固定的動作。</li>
+      <li data-en><b>The fix</b>: adjust the arm's target pose in real time based on where the vehicle actually stopped.</li>
+    </ol>
+    <div class="callout glass reveal">
+      <div class="k"><span data-zh>學到的事</span><span data-en>Takeaway</span></div>
+      <p data-zh style="margin:0">這次讓我體會到理論模型與實際系統之間的落差，控制不能只假設一切理想，還要根據實際情況修正。</p>
+      <p data-en style="margin:0">It showed me the gap between theoretical models and real systems — control has to correct for what actually happens, not just assume ideal conditions.</p>
+    </div>
+  </div>
+</section>
+<div class="page-nav">
+  <a class="btn-outline" href="smart-care.html">← <span data-zh>上一個：智慧看護</span><span data-en>Prev: Smart Nursing</span></a>
+  <a class="btn-glass glass" href="traffic-platform.html"><span data-zh>下一個：交通影像平台</span><span data-en>Next: Traffic Platform</span> →</a>
+</div>
+
+<footer>
+  <span>© 2026 張存瑀</span>
+  <span>Electrical Engineering · STUST</span>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
