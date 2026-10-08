@@ -29,7 +29,7 @@
     <li class="hide-sm"><a href="#about"><span data-zh>關於</span><span data-en>About</span></a></li>
     <li><a href="#projects"><span data-zh>專題</span><span data-en>Projects</span></a></li>
     <li><a href="research.html"><span data-zh>研究</span><span data-en>Research</span></a></li>
-    <li><a href="#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
+    <li class="hide-xs"><a href="#awards"><span data-zh>競賽</span><span data-en>Awards</span></a></li>
     <li class="hide-sm"><a href="#skills"><span data-zh>技術</span><span data-en>Skills</span></a></li>
     <li><a href="#contact"><span data-zh>聯絡</span><span data-en>Contact</span></a></li>
     <li><button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="深色模式 / Dark mode">☾</button></li>
@@ -58,8 +58,8 @@
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-dark"><span data-zh>查看專題作品</span><span data-en>View Projects</span></a>
-      <a href="research.html" class="btn-glass glass"><span data-zh>研究興趣</span><span data-en>Research</span></a>
-      <a href="#contact" class="btn-outline"><span data-zh>聯絡我</span><span data-en>Contact</span></a>
+      <a href="research.html" class="btn-dark"><span data-zh>研究興趣</span><span data-en>Research</span></a>
+      <a href="#contact" class="btn-dark"><span data-zh>聯絡我</span><span data-en>Contact</span></a>
     </div>
     <div class="stats">
       <div class="stat glass"><div class="stat-num" data-count="4">0</div><div class="stat-label"><span data-zh>專題作品</span><span data-en>Projects</span></div></div>
@@ -106,53 +106,48 @@
     <span class="section-num">02</span>
     <h2 class="section-title"><span data-zh>專題作品</span><span data-en>Projects</span></h2>
   </div>
-  <div class="projects-grid">
+  <div class="projects-grid uniform-grid">
 
-    <a href="projects/smart-care.html" class="project-card featured glass tilt reveal">
-      <div class="featured-layout">
-        <div>
-          <div class="project-kicker"><span data-zh>大學專題 · DSP 創思競賽佳作</span><span data-en>Capstone · DSP Contest Merit Award</span></div>
-          <h3 class="project-title"><span data-zh>智慧看護系統 → 多床位集中監控系統</span><span data-en>Smart Nursing System → Multi-Bed Centralized Monitoring</span></h3>
-          <p class="project-desc" data-zh>以微控制器整合<b>心電（AD8232）、血氧心率（MAX30102）、體溫與點滴液位／重量</b>感測，透過藍牙即時傳送至手機 App，並在異常時發出警示；之後擴充為多床位版本，由各床感測節點將資料彙整至 Raspberry Pi 5，再以 App 與網頁儀表板集中監控。</p>
-          <p class="project-desc" data-en>Integrates <b>ECG (AD8232), SpO₂/heart rate (MAX30102), body temperature and IV drip level/weight</b> sensing on a microcontroller, streams data to a mobile app over BLE and raises alerts. Later extended to a multi-bed version: sensor nodes per bed → Raspberry Pi 5 → app and web dashboard.</p>
-          <div class="arch">BMduino / HT32 sensor nodes → Raspberry Pi 5 (PostgreSQL) → Flutter App · Web Dashboard</div>
-          <p class="tl-role" data-zh><b>我的負責：</b>App 與資料庫開發（Flutter、BLE 資料接收、SQLite、警報通知）；盛群盃版本中除硬體外之軟體皆由我負責。</p>
-          <p class="tl-role" data-en><b>My role:</b> app &amp; database development (Flutter, BLE, SQLite, alert notifications); all non-hardware software for the Holtek Cup version.</p>
-          <div class="project-meta"><span>Flutter</span><span>BLE</span><span>SQLite</span><span>PostgreSQL</span><span>Raspberry Pi 5</span><span>HT32</span></div>
-          <div class="more"><span data-zh>查看專題詳細介紹</span><span data-en>Read the full case study</span></div>
-        </div>
-        <div class="featured-images">
-          <figure><img src="images/smart_care_system.jpg" alt="系統實際架設" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>系統實際架設</span><span data-en>System setup</span></figcaption></figure>
-          <figure><img src="images/smart_care_monitor.jpg" alt="監控畫面" onerror="this.parentElement.style.display='none'"><figcaption><span data-zh>樹莓派監控畫面</span><span data-en>Monitor UI</span></figcaption></figure>
-        </div>
-      </div>
+    <a href="projects/smart-care.html" class="project-card uniform glass tilt reveal">
+      <div class="project-kicker"><span data-zh>大學專題 · DSP 創思競賽佳作</span><span data-en>Capstone · DSP Merit Award</span></div>
+      <h3 class="project-title"><span data-zh>智慧看護系統</span><span data-en>Smart Nursing System</span></h3>
+      <p class="project-desc" data-zh>整合心電、血氧心率、體溫與點滴液位／重量感測，經藍牙即時傳到手機 App 並發出異常警示，之後擴充為多床位集中監控。</p>
+      <p class="project-desc" data-en>Combines ECG, SpO₂/HR, temperature and IV level/weight sensing, streams to a mobile app over BLE with alerts, later extended to multi-bed monitoring.</p>
+      <p class="tl-role" data-zh><b>我的負責：</b>App 與資料庫開發</p>
+      <p class="tl-role" data-en><b>My role:</b> App &amp; database</p>
+      <div class="project-meta"><span>Flutter</span><span>BLE</span><span>SQLite</span><span>HT32</span><span>Raspberry Pi 5</span></div>
+      <div class="more"><span data-zh>查看詳細介紹</span><span data-en>Read more</span></div>
     </a>
-
-    <a href="projects/smart-companion.html" class="project-card glass tilt reveal reveal-delay-1">
-      <div class="project-kicker"><span data-zh>校內競賽第三名</span><span data-en>3rd Place · Dept. Contest</span></div>
-      <h3 class="project-title"><span data-zh>智能護伴：視覺載具與機械手臂</span><span data-en>Smart Companion: Vision Vehicle &amp; Robotic Arm</span></h3>
-      <p class="project-desc" data-zh>結合視覺載具與機械手臂的照護輔助作品。我負責<b>機械手臂的藥品抓取</b>，為了讓手臂準確到位而補強正逆運動學，並針對載具停止位置的偏差，依實際位置即時調整手臂姿態。</p>
-      <p class="project-desc" data-en>A care-assist robot combining a vision vehicle and a robotic arm. I handled <b>medicine grasping with the arm</b>, applying forward/inverse kinematics and compensating for the vehicle's stopping-position error in real time.</p>
-      <div class="project-meta"><span>Kinematics</span><span>Robotic Arm</span><span>Computer Vision</span></div>
-      <div class="more"><span data-zh>詳細介紹</span><span data-en>Details</span></div>
+    <a href="projects/smart-companion.html" class="project-card uniform glass tilt reveal reveal-delay-1">
+      <div class="project-kicker"><span data-zh>校內競賽 · 第三名</span><span data-en>Dept. Contest · 3rd Place</span></div>
+      <h3 class="project-title"><span data-zh>智能護伴</span><span data-en>Smart Companion</span></h3>
+      <p class="project-desc" data-zh>結合視覺載具與機械手臂的照護輔助作品，模擬在照護場景中協助取藥，並依載具實際停下的位置即時調整手臂姿態。</p>
+      <p class="project-desc" data-en>A care-assist robot pairing a vision vehicle with a robotic arm to fetch medicine, adjusting the arm to where the vehicle actually stops.</p>
+      <p class="tl-role" data-zh><b>我的負責：</b>機械手臂藥品抓取</p>
+      <p class="tl-role" data-en><b>My role:</b> Robotic-arm grasping</p>
+      <div class="project-meta"><span>Robotic Arm</span><span>Kinematics</span><span>Vision Vehicle</span></div>
+      <div class="more"><span data-zh>查看詳細介紹</span><span data-en>Read more</span></div>
     </a>
-
-    <a href="projects/traffic-platform.html" class="project-card glass tilt reveal reveal-delay-2">
-      <div class="project-kicker"><span data-zh>技職盃黑客松 中區佳作</span><span data-en>Hackathon · Merit Award</span></div>
-      <h3 class="project-title"><span data-zh>交通影像異常監測平台</span><span data-en>Traffic Image Anomaly Monitoring Platform</span></h3>
-      <p class="project-desc" data-zh>以移動載具搭配影像偵測的監測平台。我負責<b>車輛硬體製作</b>：壓克力車體的材料切割、鑽孔與組裝，四馬達驅動，讓團隊的影像與控制程式能在實體載具上測試與展示。</p>
-      <p class="project-desc" data-en>A monitoring platform built on a mobile vehicle with image detection. I built <b>the vehicle hardware</b> — cutting, drilling and assembling the acrylic chassis with a four-motor drive.</p>
+    <a href="projects/traffic-platform.html" class="project-card uniform glass tilt reveal reveal-delay-2">
+      <div class="project-kicker"><span data-zh>技職盃黑客松 · 中區佳作</span><span data-en>MOE Hackathon · Merit Award</span></div>
+      <h3 class="project-title"><span data-zh>交通影像異常監測平台</span><span data-en>Traffic Anomaly Monitoring Platform</span></h3>
+      <p class="project-desc" data-zh>以移動載具搭配影像偵測進行交通異常監測，親手完成透明壓克力車體的切割、鑽孔與組裝，打造四馬達驅動平台。</p>
+      <p class="project-desc" data-en>A mobile vehicle with image detection for traffic anomalies; I cut, drilled and assembled the clear-acrylic chassis with a four-motor drive.</p>
+      <p class="tl-role" data-zh><b>我的負責：</b>車輛硬體製作</p>
+      <p class="tl-role" data-en><b>My role:</b> Vehicle hardware</p>
       <div class="project-meta"><span>Hardware</span><span>Motor Drive</span><span>Prototyping</span></div>
-      <div class="more"><span data-zh>詳細介紹</span><span data-en>Details</span></div>
+      <div class="more"><span data-zh>查看詳細介紹</span><span data-en>Read more</span></div>
     </a>
-
-    <article class="project-card glass tilt reveal reveal-delay-3">
-      <div class="project-kicker"><span data-zh>AI 課程期末專題</span><span data-en>AI Course Project</span></div>
-      <h3 class="project-title"><span data-zh>植物病害影像分類</span><span data-en>Plant Disease Image Classification</span></h3>
-      <p class="project-desc" data-zh>以 <b>ResNet、VGG16</b> 等卷積神經網路架構重現論文方法，比較不同模型在植物病害影像上的分類表現。</p>
-      <p class="project-desc" data-en>Reproduced published methods with <b>ResNet and VGG16</b> CNN architectures and compared their performance on plant disease images.</p>
+    <div class="project-card uniform glass tilt reveal reveal-delay-3">
+      <div class="project-kicker"><span data-zh>AI 課程 · 期末專題</span><span data-en>AI Course · Final Project</span></div>
+      <h3 class="project-title"><span data-zh>植物病害影像分類</span><span data-en>Plant Disease Classification</span></h3>
+      <p class="project-desc" data-zh>以 ResNet、VGG16 等卷積神經網路架構重現論文方法，比較不同模型在植物病害影像上的分類表現與差異。</p>
+      <p class="project-desc" data-en>Reproduced published methods with ResNet and VGG16 CNNs and compared their classification performance on plant disease images.</p>
+      <p class="tl-role" data-zh><b>我的負責：</b>模型重現與比較</p>
+      <p class="tl-role" data-en><b>My role:</b> Model reproduction &amp; comparison</p>
       <div class="project-meta"><span>Python</span><span>CNN</span><span>ResNet</span><span>VGG16</span></div>
-    </article>
+      <div class="more muted"><span data-zh>課程作品</span><span data-en>Course project</span></div>
+    </div>
 
   </div>
 </section>
@@ -277,17 +272,14 @@
           <span class="skill-tag accent">C / C++</span>
           <span class="skill-tag accent">Python</span>
           <span class="skill-tag">Dart (Flutter)</span>
-          <span class="skill-tag">MATLAB</span>
         </div>
       </div>
       <div>
         <div class="skill-group-label"><span data-zh>嵌入式系統 &amp; 開發板</span><span data-en>Embedded &amp; Boards</span></div>
         <div class="skill-tags">
-          <span class="skill-tag accent"><span data-zh>嵌入式系統</span><span data-en>Embedded Systems</span></span>
           <span class="skill-tag">Raspberry Pi</span>
           <span class="skill-tag">Arduino</span>
           <span class="skill-tag">HT32 / BMduino</span>
-          <span class="skill-tag"><span data-zh>生理感測器</span><span data-en>Biosensors</span></span>
         </div>
       </div>
       <div>
@@ -297,7 +289,7 @@
           <span class="skill-tag">Android Studio</span>
           <span class="skill-tag">PostgreSQL</span>
           <span class="skill-tag">SQLite</span>
-          <span class="skill-tag">Fusion 360</span>
+          <span class="skill-tag">Fusion 360 <span data-zh>（3D 建模）</span><span data-en>(3D modeling)</span></span>
         </div>
       </div>
       <div>

@@ -358,3 +358,44 @@ a.project-card { text-decoration: none; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ── v4: uniform project cards & buttons ── */
+.uniform-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+.project-card.uniform { display: flex; flex-direction: column; gap: 10px; }
+.project-card.uniform .project-title { min-height: 1.35em; }
+.project-card.uniform .project-desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: calc(1.8em * 3); }
+body.en .project-card.uniform .project-desc[data-en] { display: -webkit-box; }
+body.en .project-card.uniform .project-desc[data-zh], body:not(.en) .project-card.uniform .project-desc[data-en] { display: none; }
+.project-card.uniform .tl-role { margin-top: 0; }
+.project-card.uniform .project-meta { margin-top: auto; }
+.project-card.uniform .more { padding-top: 6px; }
+.more.muted { color: var(--muted); }
+.more.muted::after { content: "" !important; }
+.hero-actions .btn-glass { min-width: 140px; text-align: center; }
+@media (max-width: 768px) { .uniform-grid { grid-template-columns: 1fr; } .project-card.uniform { min-height: 0; } }
+.hero-actions .btn-dark, .page-nav .btn-dark { min-width: 140px; text-align: center; border-radius: 0; }
+
+/* ── v5: gallery keeps each photo's own shape (no black/white bars) ── */
+.gallery { display: block; columns: 3 220px; column-gap: 14px; }
+.gallery figure { break-inside: avoid; margin: 0 0 14px; display: inline-block; width: 100%; }
+.gallery img, .gallery img.contain { width: 100%; height: auto; max-height: none; object-fit: fill; background: none; }
+.spec-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ── v5: phone layout ── */
+@media (max-width: 768px) {
+  .nav-links li.hide-xs { display: none; }
+  .nav-links { gap: .8rem; }
+  .nav-links a { font-size: 12.5px; }
+  .hero { min-height: auto; justify-content: flex-start; padding: 6rem 1.25rem 3rem; }
+  .hero h1 { font-size: clamp(2.6rem, 13vw, 3.4rem); }
+  .hero-desc { margin-bottom: 1.8rem; font-size: 15px; }
+  .hero-scroll { display: none; }
+  .hero-actions { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; width: 100%; }
+  .hero-actions .btn-dark { min-width: 0; padding: 12px 4px; font-size: 12.5px; }
+  .stat { min-width: 0; flex: 1; padding: 10px 8px; text-align: center; }
+  .spec { font-size: 13px; }
+  .spec th, .spec td { padding: 8px 6px; }
+  .gallery { columns: 1; }
+  .gallery img, .gallery img.contain { max-height: none; }
+  .page-nav .btn-dark { flex: 1; min-width: 0; }
+}
